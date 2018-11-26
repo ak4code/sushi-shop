@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% load nav_menu %}
+{% block content %}
+    {% catalog_menu %}
+    <h1 class="uk-text-center text-kelly">{{ site.name }} - Роллы, суши, пицца, гамбургеры. Доставка</h1>
+    <div>{{ site.shop.description|safe }}</div>
+{% endblock %}

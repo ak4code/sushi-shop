@@ -1,0 +1,135 @@
+$bg-color: #02B4B2;
+$card-bg-color: rgba(255, 193, 73, 0.9);
+$theme-red-color: #ff3135;
+
+@import url('https://fonts.googleapis.com/css?family=Kelly+Slab');
+
+@import "uikit/src/scss/variables-theme.scss";
+@import "uikit/src/scss/mixins-theme.scss";
+
+@import "uikit/src/scss/uikit-theme.scss";
+
+body, html {
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  color: black;
+  min-height: 100vh;
+  background-color: $bg-color;
+  background: url("../assets/pattern.jpg");
+  background-size: auto;
+  background-attachment: fixed;
+}
+
+a {
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+header {
+  .header {
+    background-color: $card-bg-color;
+    padding: 20px;
+    border-radius: 25px 25px 0px 0px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    .text {
+      font-family: 'Kelly Slab', cursive;
+      display: block;
+    }
+  }
+  .primary-menu {
+    background-color: $theme-red-color;
+    position: relative;
+    &:after {
+      content: '';
+      position: absolute;
+      right: -10px;
+      top: -20px;
+      border: 10px solid transparent;
+      border-bottom: 10px solid #710918;
+      border-left: 0;
+    }
+    &:before {
+      content: '';
+      position: absolute;
+      left: -10px;
+      top: -20px;
+      border: 10px solid transparent;
+      border-bottom: 10px solid #710918;
+      border-right: 0;
+    }
+    nav {
+      &:after {
+        content: '';
+        position: absolute;
+        right: -10px;
+        top: 0;
+        border: 10px solid transparent;
+        border-top: 35px solid $theme-red-color;;
+      }
+      &:before {
+        content: '';
+        position: absolute;
+        left: -10px;
+        top: 0;
+        border: 10px solid transparent;
+        border-top: 35px solid $theme-red-color;;
+      }
+      ul {
+        list-style: none;
+        li {
+          a {
+            display: block;
+            color: white;
+            padding: 0px 10px;
+            min-height: 35px;
+            line-height: 35px;
+            transition: all .2s ease-out;
+            &:hover {
+              text-decoration: none;
+              background-color: $card-bg-color;
+              color: black;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.ss-card {
+  background-color: $card-bg-color;
+  padding: 20px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.text-kelly {
+  font-family: 'Kelly Slab', cursive;
+}
+
+.category-header {
+  background: $bg-color;
+  color: white;
+  h3 {
+    color: white;
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    right: -5px;
+    top: -10px;
+    border: 5px solid transparent;
+    border-bottom: 5px solid #025553;
+    border-left: 0;
+  }
+  &:before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: -10px;
+    border: 5px solid transparent;
+    border-bottom: 5px solid #025553;
+    border-right: 0;
+  }
+}

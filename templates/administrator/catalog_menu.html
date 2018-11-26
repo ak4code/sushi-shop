@@ -1,0 +1,30 @@
+<h3 class="uk-text-center text-kelly">Наше меню</h3>
+<div class="uk-flex uk-flex-center uk-flex-wrap uk-grid-small uk-child-width-1-5" uk-grid>
+    {% for category in categories %}
+        {% if not category.is_promo %}
+            <div>
+                <a href="{{ category.get_absolute_url }}" title="{{ category.title }}">
+                    <div class="uk-card">
+                        <div class="category-header">
+                            <h3 class="uk-text-center text-kelly uk-text-uppercase">{{ category.title }}</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+<h3 class="uk-text-center text-kelly">Наши акции</h3>
+<div class="uk-flex uk-flex-center uk-flex-wrap">
+    {% for category in categories %}
+        {% if category.is_promo %}
+            <div>
+                <a href="{{ category.get_absolute_url }}" title="{{ category.title }}">
+                    <div class="uk-card">
+                        <h3 class="uk-text-center text-kelly uk-text-uppercase">{{ category.title }}</h3>
+                    </div>
+                </a>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>

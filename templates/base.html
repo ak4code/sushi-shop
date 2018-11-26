@@ -1,0 +1,59 @@
+{% load webpack_loader %}
+{% load nav_menu %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sushi Shop</title>
+    {% get_files 'app' 'js' as app_js_files %}
+    {% get_files 'app' 'css' as app_css_files %}
+    {% for js_file in app_js_files %}
+        <link href="{{ js_file.publicPath }}" rel="preload" as="script">
+    {% endfor %}
+    {% for css_file in app_css_files %}
+        <link href="{{ css_file.publicPath }}" rel="preload" as="style">
+    {% endfor %}
+    {% render_bundle 'app' 'css' %}
+</head>
+<body>
+<header class="uk-margin-top">
+    <div class="uk-container">
+        <div class="header">
+            <div class="uk-flex uk-flex-middle uk-flex-between">
+                <div class="uk-width-2-3 uk-visible@s">
+                    <div class="uk-text-center uk-text-middle text uk-h1">
+                        {% for address in site.shop.address.all %}
+                            {{ address.get_full_address }}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div>
+                    <a href="{% url 'home' %}" title="Sushi Shop - Роллы, пицца, бургеры. Темрюк доставка">
+                        <img src="{{ site.shop.logo.url }}">
+                    </a>
+                </div>
+                <div class="uk-width-2-3 uk-visible@s">
+                    <div class="uk-text-center uk-text-middle text uk-h1">
+                        {% for phone in site.shop.phones.all %}
+                            {{ phone }}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="primary-menu">
+            {% primary_menu %}
+        </div>
+    </div>
+</header>
+<main class="uk-container">
+    <div class="ss-card">
+        {% block content %}
+        {% endblock %}
+    </div>
+</main>
+<div id="app"></div>
+{% render_bundle 'app' 'js' %}
+</body>
+</html>
