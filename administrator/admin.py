@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Shop, Link, Address, Phone
+from .models import Shop, Link, Address, Phone, Page
 
 
 class LinkInline(admin.TabularInline):
@@ -20,3 +20,9 @@ class PhoneInline(admin.TabularInline):
 @admin.register(Shop)
 class ShopAdmin(admin.ModelAdmin):
     inlines = (LinkInline, AddressInline, PhoneInline)
+
+
+@admin.register(Page)
+class PageAdmin(admin.ModelAdmin):
+    pass
+

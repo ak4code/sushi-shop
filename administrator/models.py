@@ -1,10 +1,12 @@
 from django.db import models
 from django.contrib.sites.models import Site
+from django.urls import reverse
 from tinymce.models import HTMLField
+from uuslug import uuslug
 
 
 class Shop(models.Model):
-    site = models.OneToOneField(Site, on_delete=models.CASCADE)
+    site = models.OneToOneField(Site, on_delete=models.CASCADE, verbose_name='Сайт')
     logo = models.ImageField(upload_to='logo', blank=True, null=True, verbose_name='Логотип')
     description = HTMLField(blank=True, null=True, verbose_name='Описание')
 
@@ -57,3 +59,27 @@ class Phone(models.Model):
     class Meta:
         verbose_name = 'Телефон'
         verbose_name_plural = 'Телефоны'
+
+
+class Page(models.Model):
+    title = models.CharField(max_length=255, verbose_name='Заголовок')
+    content = HTMLField(blank=True, null=True, verbose_name='Контент')
+    created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    updated = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
+    meta_description = models.TextField(verbose_name='Мета SEO описание')
+    slug = models.SlugField(max_length=255, blank=True, null=True, verbose_name='Ссылка ЧПУ')
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('page', args=[str(self.slug)])
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = uuslug(self.title, instance=self)
+        super(Page, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = 'Страница'
+        verbose_name_plural = 'Страницы'
