@@ -1,8 +1,11 @@
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.contrib.sites.models import Site
 from django.urls import reverse
 from tinymce.models import HTMLField
 from uuslug import uuslug
+from mptt.models import MPTTModel, TreeForeignKey
 
 
 class Shop(models.Model):
@@ -83,3 +86,40 @@ class Page(models.Model):
     class Meta:
         verbose_name = 'Страница'
         verbose_name_plural = 'Страницы'
+
+
+class Menu(models.Model):
+    LOCATIONS = (
+        ('primary', 'Главное меню'),
+        ('footer', 'Футер меню'),
+    )
+    name = models.CharField(max_length=255, verbose_name='Название')
+    location = models.CharField(max_length=255, blank=True, null=True, choices=LOCATIONS,
+                                verbose_name='Зона отобржения')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Меню'
+        verbose_name_plural = 'Меню'
+
+
+class MenuItem(MPTTModel):
+    name = models.CharField(max_length=255, verbose_name='Название')
+    menu = models.ForeignKey(Menu, related_name='items', on_delete=models.CASCADE, verbose_name='Меню')
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children',
+                            verbose_name='Родительский пункт')
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
+
+    class MPTTMeta:
+        order_insertion_by = ['name']
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Пункт меню'
+        verbose_name_plural = 'Пункты меню'

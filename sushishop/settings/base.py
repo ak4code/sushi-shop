@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'tinymce',
     'rest_framework',
     'django_filters',
+    'mptt',
     'import_export',
     'administrator.apps.AdminConfig',
     'catalog.apps.CatalogConfig',
