@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse
 from tinymce.models import HTMLField
+from django.contrib.contenttypes.fields import GenericRelation
+from administrator.models import MenuItem
 
 
 class Category(models.Model):
@@ -10,6 +12,7 @@ class Category(models.Model):
     is_promo = models.BooleanField(default=False, verbose_name='Это акция?')
     is_home = models.BooleanField(default=False, verbose_name='Показывать на главной')
     slug = models.SlugField(blank=True, null=True, unique=True, verbose_name='Ссылка')
+    menu_items = GenericRelation(MenuItem)
 
     def get_absolute_url(self):
         return reverse('catalog:category', args=[str(self.slug)])

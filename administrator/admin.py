@@ -1,5 +1,13 @@
 from django.contrib import admin
+from django.contrib.contenttypes.admin import GenericTabularInline
+from mptt.admin import DraggableMPTTAdmin
+
 from .models import Shop, Link, Address, Phone, Page, Menu, MenuItem
+
+
+class MenuItemsInline(GenericTabularInline):
+    model = MenuItem
+    extra = 1
 
 
 class LinkInline(admin.TabularInline):
@@ -24,12 +32,17 @@ class ShopAdmin(admin.ModelAdmin):
 
 @admin.register(Page)
 class PageAdmin(admin.ModelAdmin):
-    pass
+    inlines = (MenuItemsInline,)
 
 
 class MenuItemInline(admin.TabularInline):
     model = MenuItem
     extra = 1
+
+
+@admin.register(MenuItem)
+class MenuItemAdmin(DraggableMPTTAdmin):
+    pass
 
 
 @admin.register(Menu)

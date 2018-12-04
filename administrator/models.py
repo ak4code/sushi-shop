@@ -1,4 +1,4 @@
-from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.contrib.sites.models import Site
@@ -71,6 +71,7 @@ class Page(models.Model):
     updated = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
     meta_description = models.TextField(verbose_name='Мета SEO описание')
     slug = models.SlugField(max_length=255, blank=True, null=True, verbose_name='Ссылка ЧПУ')
+    menu_items = GenericRelation('MenuItem')
 
     def __str__(self):
         return self.title
@@ -110,16 +111,25 @@ class MenuItem(MPTTModel):
     menu = models.ForeignKey(Menu, related_name='items', on_delete=models.CASCADE, verbose_name='Меню')
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children',
                             verbose_name='Родительский пункт')
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
+    link = models.CharField(max_length=255, blank=True, null=True, verbose_name='Ссылка')
+    content_type = models.ForeignKey(ContentType, blank=True, null=True, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField(blank=True, null=True, )
     content_object = GenericForeignKey('content_type', 'object_id')
+    position = models.PositiveIntegerField(default=0, blank=False, null=False, verbose_name='Порядок')
 
     class MPTTMeta:
-        order_insertion_by = ['name']
+        order_insertion_by = ['position']
 
     def __str__(self):
         return self.name
 
+    def get_url(self):
+        if self.content_object:
+            return self.content_object.get_absolute_url()
+        else:
+            return self.link
+
     class Meta:
+        ordering = ['position']
         verbose_name = 'Пункт меню'
         verbose_name_plural = 'Пункты меню'

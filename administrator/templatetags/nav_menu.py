@@ -1,12 +1,14 @@
 from django import template
 from catalog.models import Category
+from administrator.models import Menu
 
 register = template.Library()
 
 
 @register.inclusion_tag('administrator/primary_menu.html')
 def primary_menu():
-    pass
+    menu = Menu.objects.get(location='primary')
+    return {'menu': menu}
 
 
 @register.inclusion_tag('administrator/catalog_menu.html')

@@ -1,7 +1,8 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render_to_response
+from django.template import RequestContext
 from django.views.generic import TemplateView
 from .models import Page
-
+from django.views.defaults import page_not_found
 
 class HomeView(TemplateView):
     template_name = "administrator/home.html"

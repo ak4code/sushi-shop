@@ -79,6 +79,10 @@ header {
       ul {
         list-style: none;
         li {
+          .menu-dropdown {
+            background: $theme-red-color;
+            padding: 0;
+          }
           a {
             display: block;
             color: white;
@@ -170,9 +174,9 @@ header {
     border-color: $bg-color;
   }
   &:focus {
-    background: #028785;
-    color: #d2d2d2;
-    border-color: $bg-color;
+    background: #03d7d4;
+    color: #ffffff;
+    border-color: #04fffb;
   }
   &:hover {
     background: #028785;
@@ -194,7 +198,6 @@ header {
 }
 
 .category-bar {
-  border: 1px solid $bg-color;
   padding: 2.5px;
   .category-item {
     padding: 2.5px;
@@ -223,3 +226,4 @@ header {
     }
   }
 }
+

@@ -1,16 +1,24 @@
+{% load mptt_tags %}
 <nav>
     <ul class="uk-flex uk-flex-center uk-padding-remove uk-margin-remove">
-        <li>
-            <a href="{% url 'home' %}">Главная</a>
-        </li>
-        <li>
-            <a href="/menu">Меню</a>
-        </li>
-        <li>
-            <a href="/menu">Доставка</a>
-        </li>
-        <li>
-            <a href="/menu">Контакты</a>
-        </li>
+        {% for item in menu.items.all %}
+            {% if item.is_root_node %}
+                <li class="uk-inline">
+                    <a {% if item.get_url %}href="{{ item.get_url }}"{% endif %} title="{{ item.name }}">
+                        {{ item.name }}
+                    </a>
+                    {% if item.children.all %}
+                        <div uk-dropdown="offset: 0" class="menu-dropdown">
+                            <ul class="uk-padding-remove uk-margin-remove">
+                                {% for children in item.children.all %}
+                                    <li><a href="{{ children.get_url }}"
+                                           title="{{ children.name }}">{{ children.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </li>
+            {% endif %}
+        {% endfor %}
     </ul>
 </nav>

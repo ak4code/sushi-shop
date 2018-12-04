@@ -1,7 +1,8 @@
 <template>
   <div id="products">
     <category-bar :active-category="category"></category-bar>
-    <div class="uk-flex uk-flex-center uk-flex-wrap uk-grid-match uk-grid-small uk-child-width-1-2 uk-child-width-1-4@m uk-child-width-1-5@l uk-margin">
+    <div
+      class="uk-flex uk-flex-center uk-flex-wrap uk-grid-match uk-grid-small uk-child-width-1-2 uk-child-width-1-4@m uk-child-width-1-5@l uk-margin">
       <div v-for="product in products" :key="product.id">
         <div class="uk-card uk-position-relative">
           <div class="uk-card-media-top uk-cover-container">
@@ -34,9 +35,10 @@
 
 <script>
   import CategoryBar from '../components/CategoryBar'
+
   export default {
     name: 'products',
-    data() {
+    data () {
       return {
         category: null,
         products: [],
@@ -47,24 +49,27 @@
     components: {
       CategoryBar
     },
-    created() {
+    created () {
       this.category = categoryId
-      this.$axios.get(`/api/products?category=${this.category}`)
-        .then(res => {
-          this.products = res.data.results
-          this.loadMore = res.data.next
-          this.loading = false
-        })
+      this.getProducts(this.category)
+      this.loading = false
     },
     methods: {
-      getMore() {
+      async getProducts (category) {
+        await this.$axios.get(`/api/products?category=${category}`)
+          .then(res => {
+            this.products = res.data.results
+            this.loadMore = res.data.next
+          })
+      },
+      async getMore () {
         this.loading = true
-        this.$axios.get(this.loadMore)
+        await this.$axios.get(this.loadMore)
           .then(res => {
             this.products = [...this.products, ...res.data.results]
             this.loadMore = res.data.next
-            this.loading = false
           })
+        this.loading = false
       }
     }
   }

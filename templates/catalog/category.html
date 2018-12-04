@@ -1,14 +1,12 @@
 {% extends 'base.html' %}
 {% load webpack_loader %}
-{% block page_title %}
-    {{ block.super }} | {{ category.title }} | {% for address in site.shop.address.all %}
-    {{ address.city }}
-{% endfor %}
-{% endblock %}
+{% block page_title %}{{ block.super }} | {{ category.title }}{% endblock %}
+{% block page_description %}{{ category.description|striptags }}{% endblock %}
 {% block content %}
     <div id="products"></div>
-    <div class="page-content">
+    <div class="page-content uk-container uk-container-small">
         <h1 class="uk-text-center text-kelly">{{ category.title }}</h1>
+        <div class="category-description">{{ category.description|safe }}</div>
     </div>
 {% endblock %}
 {% block extra_script %}

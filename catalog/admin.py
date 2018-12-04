@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import Category, Product
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
+from administrator.admin import MenuItemsInline
 
 
 class ProductResource(resources.ModelResource):
@@ -11,7 +12,7 @@ class ProductResource(resources.ModelResource):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    pass
+    inlines = (MenuItemsInline,)
 
 
 @admin.register(Product)
