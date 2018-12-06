@@ -1,9 +1,9 @@
 from .base import *
-from decouple import config
+from decouple import config, Csv
 
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 DATABASES = {
     'default': {
