@@ -16,7 +16,7 @@ DATABASES = {
 }
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'sushijs/dist'),
+    os.path.join(BASE_DIR, 'sushijs/bundle'),
 )
 
 WEBPACK_LOADER = {
