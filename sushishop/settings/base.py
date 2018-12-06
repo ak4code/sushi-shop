@@ -20,7 +20,7 @@ INSTALLED_APPS = [
     'django_filters',
     'mptt',
     'import_export',
-    'administrator.apps.AdminConfig',
+    'administrator.apps.AdministratorConfig',
     'catalog.apps.CatalogConfig',
 ]
 
