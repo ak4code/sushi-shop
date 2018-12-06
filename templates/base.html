@@ -1,13 +1,14 @@
 {% load webpack_loader %}
 {% load nav_menu %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block page_title %}Sushi Shop{% endblock %} | Доставка роллов, пиццы, бургеры | Темрюк</title>
-    <meta name="description"
-          content="{% block page_description %}Sushi Shop - это сеть магазинов японской кухни. На заказ роллы, запеченные роллы, суши, острые суши, горячие блюда, салаты, фаст-фуд, пицца. Доставка Темрюк.{% endblock %}">
+    <meta name="description" content="{% block page_description %}Sushi Shop - это сеть магазинов японской кухни. На заказ роллы, запеченные роллы, суши, острые суши, горячие блюда, салаты, фаст-фуд, пицца. Доставка Темрюк.{% endblock %}">
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" />
     {% get_files 'index' 'js' as app_js_files %}
     {% get_files 'index' 'css' as app_css_files %}
     {% for js_file in app_js_files %}

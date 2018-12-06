@@ -5,7 +5,7 @@
       class="uk-flex uk-flex-center uk-flex-wrap uk-grid-match uk-grid-small uk-child-width-1-2 uk-child-width-1-4@m uk-child-width-1-5@l uk-margin">
       <div v-for="product in products" :key="product.id">
         <div class="uk-card uk-position-relative">
-          <div class="uk-card-media-top uk-cover-container">
+          <div class="uk-card-media-top uk-cover-container" v-if="product.image">
             <canvas height="250"></canvas>
             <img :src="product.image" :alt="product.title" uk-cover>
           </div>
@@ -38,7 +38,7 @@
 
   export default {
     name: 'products',
-    data () {
+    data() {
       return {
         category: null,
         products: [],
@@ -49,20 +49,20 @@
     components: {
       CategoryBar
     },
-    created () {
+    created() {
       this.category = categoryId
       this.getProducts(this.category)
       this.loading = false
     },
     methods: {
-      async getProducts (category) {
+      async getProducts(category) {
         await this.$axios.get(`/api/products?category=${category}`)
           .then(res => {
             this.products = res.data.results
             this.loadMore = res.data.next
           })
       },
-      async getMore () {
+      async getMore() {
         this.loading = true
         await this.$axios.get(this.loadMore)
           .then(res => {
