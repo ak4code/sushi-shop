@@ -82,6 +82,9 @@
     </div>
 </footer>
 <div id="app"></div>
+{% if not debug %}
+    {% render_bundle 'chunk-vendors' 'js' %}
+{% endif %}
 {% render_bundle 'index' 'js' %}
 {% block extra_script %}{% endblock %}
 </body>
