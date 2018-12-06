@@ -1,6 +1,6 @@
 <template>
   <div id="cart">
-    Vue ad
+   <span></span>
   </div>
 </template>
 

@@ -18,7 +18,7 @@ module.exports = {
   },
   configureWebpack: {
     plugins: [
-      new BundleTracker({filename: './webpack-stats.json'})
+      new BundleTracker({filename: process.env.NODE_ENV === 'production' ? './webpack-prod-stats.json' : './webpack-stats.json'})
     ]
   }
 }

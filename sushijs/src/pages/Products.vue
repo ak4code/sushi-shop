@@ -5,6 +5,7 @@
       class="uk-flex uk-flex-center uk-flex-wrap uk-grid-match uk-grid-small uk-child-width-1-2 uk-child-width-1-4@m uk-child-width-1-5@l uk-margin">
       <div v-for="product in products" :key="product.id">
         <div class="uk-card uk-position-relative">
+          <label class="uk-position-top-right product-label" v-if="product.label">{{product.label}}</label>
           <div class="uk-card-media-top uk-cover-container" v-if="product.image">
             <canvas height="250"></canvas>
             <img :src="product.image" :alt="product.title" uk-cover>

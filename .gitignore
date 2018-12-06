@@ -14,3 +14,4 @@ media
 
 .idea
 webpack-stats.json
+webpack-prod-stats.json

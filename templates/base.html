@@ -7,13 +7,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block page_title %}Sushi Shop{% endblock %} | Доставка роллов, пиццы, бургеры | Темрюк</title>
-    <meta name="description" content="{% block page_description %}Sushi Shop - это сеть магазинов японской кухни. На заказ роллы, запеченные роллы, суши, острые суши, горячие блюда, салаты, фаст-фуд, пицца. Доставка Темрюк.{% endblock %}">
-    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" />
+    <meta name="description"
+          content="{% block page_description %}Sushi Shop - это сеть магазинов японской кухни. На заказ роллы, запеченные роллы, суши, острые суши, горячие блюда, салаты, фаст-фуд, пицца. Доставка Темрюк.{% endblock %}">
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}"/>
     {% get_files 'index' 'js' as app_js_files %}
     {% get_files 'index' 'css' as app_css_files %}
     {% for js_file in app_js_files %}
         <link href="{{ js_file.publicPath }}" rel="preload" as="script">
     {% endfor %}
+    {% if not debug %}
+        {% get_files 'chunk-vendors' 'js' as chunk_js_files %}
+        {% for js_file in chunk_js_files %}
+            <link href="{{ js_file.publicPath }}" rel="preload" as="script">
+        {% endfor %}
+    {% endif %}
     {% for css_file in app_css_files %}
         <link href="{{ css_file.publicPath }}" rel="preload" as="style">
     {% endfor %}
