@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load webpack_loader %}
+{% block page_title %}{{ block.super }} | Корзина товаров{% endblock %}
+{% block page_description %}Корзина товаров Sushi Shop{% endblock %}
+{% block content %}
+    <div class="page-content uk-container uk-container-small">
+        <h1 class="uk-text-center text-kelly">Корзина товаров</h1>
+    </div>
+    <div id="cart">
+    {{ request.session.session_key }}
+    </div>
+{% endblock %}
+{% block extra_script %}
+    <script type="text/javascript">
+        const sessionId = ""
+    </script>
+{% endblock %}

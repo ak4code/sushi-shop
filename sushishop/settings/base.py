@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'import_export',
     'administrator.apps.AdministratorConfig',
     'catalog.apps.CatalogConfig',
+    'shop.apps.ShopConfig',
 ]
 
 MIDDLEWARE = [

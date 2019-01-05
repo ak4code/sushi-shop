@@ -3,6 +3,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from administrator.views import HomeView, PageView
+from shop.views import CartView
 from .endpoints import router
 
 admin.autodiscover()
@@ -15,6 +16,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include(router.urls)),
     path('menu/', include(('catalog.urls', 'catalog'), namespace='catalog')),
+    path('cart/', CartView.as_view(), name='cart'),
     path('', HomeView.as_view(), name='home'),
     path('<slug:url>/', PageView.as_view(), name='page'),
 ]

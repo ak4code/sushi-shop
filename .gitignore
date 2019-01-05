@@ -13,6 +13,7 @@ media
 .env
 
 .idea
+venv
 webpack-stats.json
 webpack-prod-stats.json
 dump.json
