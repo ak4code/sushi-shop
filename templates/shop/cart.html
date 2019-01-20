@@ -6,12 +6,9 @@
     <div class="page-content uk-container uk-container-small">
         <h1 class="uk-text-center text-kelly">Корзина товаров</h1>
     </div>
-    <div id="cart">
-    {{ request.session.session_key }}
-    </div>
 {% endblock %}
 {% block extra_script %}
     <script type="text/javascript">
-        const sessionId = ""
+        let sessionId = "{{ request.session.session_key }}"
     </script>
 {% endblock %}

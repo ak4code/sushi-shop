@@ -4,7 +4,7 @@
     <div
       class="uk-flex uk-flex-center uk-flex-wrap uk-grid-match uk-grid-small uk-child-width-1-2 uk-child-width-1-4@m uk-child-width-1-5@l uk-margin">
       <div v-for="product in products" :key="product.id">
-        <div class="uk-card uk-position-relative">
+        <div class="uk-card uk-position-relative uk-margin-bottom">
           <label class="uk-position-top-right product-label" v-if="product.label">{{product.label}}</label>
           <div class="uk-card-media-top uk-cover-container" v-if="product.image">
             <canvas height="250"></canvas>
@@ -13,9 +13,18 @@
           <div class="uk-card-small uk-text-center">
             <h3 class="uk-h5 uk-margin-remove">{{product.title}}</h3>
             <small>{{product.short_desc}}</small>
-            <div style="min-height: 40px;"></div>
-            <div class="uk-position-bottom-center uk-margin">
-              <strong>{{product.price}} руб.</strong>
+            <div style="min-height: 53px;"></div>
+            <div class="uk-position-bottom">
+              <div class="uk-flex uk-flex-middle uk-flex-wrap uk-child-width-1-2@m uk-child-width-1-1">
+                <div>
+                  <strong>{{product.price}} руб.</strong>
+                </div>
+                <div>
+                  <button class="uk-button-small uk-button uk-button-danger"
+                          @click.prevent="addToCart({product: product.id, cart: cart.id})">В корзину {{cart}}
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -36,6 +45,7 @@
 
 <script>
   import CategoryBar from '../components/CategoryBar'
+  import {mapActions, mapGetters} from 'vuex'
 
   export default {
     name: 'products',
@@ -55,6 +65,11 @@
       this.getProducts(this.category)
       this.loading = false
     },
+    computed: {
+      ...mapGetters({
+        cart: ['cart']
+      })
+    },
     methods: {
       async getProducts(category) {
         await this.$axios.get(`/api/products?category=${category}`)
@@ -71,7 +86,10 @@
             this.loadMore = res.data.next
           })
         this.loading = false
-      }
+      },
+      ...mapActions({
+        addToCart: 'addToCart'
+      })
     }
   }
 </script>
