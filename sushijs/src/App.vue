@@ -2,8 +2,7 @@
   <div id="cart">
     <div class="uk-flex uk-flex-center uk-flex-wrap uk-grid-small">
       <a href="/cart" class="cart-btn">
-        <div><span uk-icon="icon: cart; ratio: 1"></span> Корзина: <strong>0 руб.</strong></div>
-        {{cart.id}}
+        <div><span uk-icon="icon: cart; ratio: 1"></span> Корзина: <strong>{{cart.total}} руб.</strong></div>
       </a>
     </div>
   </div>
@@ -14,7 +13,7 @@
 
   export default {
     name: 'app',
-    created() {
+    created () {
       this.initCart()
     },
     computed: {

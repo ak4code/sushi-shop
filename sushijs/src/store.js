@@ -13,19 +13,30 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    SET_CART(state, data) {
+    SET_CART (state, data) {
       state.basket = data
     }
   },
   actions: {
-    async initCart({commit}) {
+    async initCart ({commit}) {
       let {data} = await axios.post('/api/carts/init/')
       commit('SET_CART', data)
     },
-    async addToCart({state, dispatch}, item) {
-      console.log(item)
-      let {data} = await axios.post('/api/cart-items/', item)
+    async addToCart ({state, dispatch}, productId) {
+      let {data} = await axios.post('/api/cart-items/', {product: productId, cart: state.basket.id, quantity: 1})
       await dispatch('initCart')
+    },
+    async updateItemCart ({dispatch}, item) {
+      let {data} = await axios.patch(`/api/cart-items/${item.id}/`, item)
+      await dispatch('initCart')
+    },
+    async deleteItemCart ({dispatch}, item) {
+      let {data} = await axios.delete(`/api/cart-items/${item.id}/`)
+      await dispatch('initCart')
+    },
+    async checkout ({dispatch}, order) {
+      let {data} = await axios.post('/api/orders/', order)
+      return data
     }
   },
 });

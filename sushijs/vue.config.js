@@ -12,9 +12,6 @@ module.exports = {
     index: {
       entry: 'src/main.js',
       chunks: ['chunk-vendors', 'chunk-common', 'index']
-    },
-    products: {
-      entry: 'src/pages/products.js'
     }
   },
   configureWebpack: {

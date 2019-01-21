@@ -60,6 +60,8 @@
         </div>
     </div>
 </header>
+<div id="app">
+</div>
 <main class="uk-container">
     <div class="ss-card">
         {% block content %}
@@ -83,18 +85,11 @@
         </div>
     </div>
 </footer>
-<div id="app">
-    <template slot="phone">
-        {% for phone in site.shop.phones.all %}
-            <div>{{ phone }}</div>
-        {% endfor %}
-    </template>
-</div>
 {% if not debug %}
     {% render_bundle 'chunk-vendors' 'js' %}
 {% endif %}
-{% render_bundle 'index' 'js' %}
 {% block extra_script %}{% endblock %}
+{% render_bundle 'index' 'js' %}
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript"> (function (m, e, t, r, i, k, a) {
     m[i] = m[i] || function () {

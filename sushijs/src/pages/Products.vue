@@ -21,7 +21,7 @@
                 </div>
                 <div>
                   <button class="uk-button-small uk-button uk-button-danger"
-                          @click.prevent="addToCart({product: product.id, cart: cart.id})">В корзину {{cart}}
+                          @click="addItem(product.id)">В корзину
                   </button>
                 </div>
               </div>
@@ -45,40 +45,35 @@
 
 <script>
   import CategoryBar from '../components/CategoryBar'
-  import {mapActions, mapGetters} from 'vuex'
+  import {mapActions} from 'vuex'
+  import UIkit from 'uikit'
 
   export default {
     name: 'products',
-    data() {
-      return {
-        category: null,
-        products: [],
-        loadMore: '',
-        loading: true
-      }
-    },
+    data: () => ({
+      category: null,
+      products: [],
+      loadMore: '',
+      loading: true
+    }),
     components: {
       CategoryBar
     },
-    created() {
+    created () {
       this.category = categoryId
       this.getProducts(this.category)
       this.loading = false
     },
-    computed: {
-      ...mapGetters({
-        cart: ['cart']
-      })
-    },
+    computed: {},
     methods: {
-      async getProducts(category) {
+      async getProducts (category) {
         await this.$axios.get(`/api/products?category=${category}`)
           .then(res => {
             this.products = res.data.results
             this.loadMore = res.data.next
           })
       },
-      async getMore() {
+      async getMore () {
         this.loading = true
         await this.$axios.get(this.loadMore)
           .then(res => {
@@ -86,6 +81,16 @@
             this.loadMore = res.data.next
           })
         this.loading = false
+      },
+      addItem (productId) {
+        this.addToCart(productId)
+          .then(
+            UIkit.notification({
+              message: 'Добавлено в корзину!',
+              pos: 'top-right',
+              timeout: 6000
+            })
+          )
       },
       ...mapActions({
         addToCart: 'addToCart'
