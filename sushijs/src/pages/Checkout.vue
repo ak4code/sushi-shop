@@ -47,24 +47,24 @@
       </div>
       <div class="uk-width-1-4@m">
         <div class="uk-card uk-card-default uk-card-small uk-card-body">
-          <form class="uk-form-stacked">
+          <form class="uk-form-stacked" v-on:submit.prevent="sendOrder">
             <div class="uk-margin">
               <label class="uk-form-label" for="client-name">Как Вас зовут?</label>
               <div class="uk-form-controls">
-                <input class="uk-input" v-model="order.name" id="client-name" type="text" placeholder="Имя">
+                <input class="uk-input" required v-model="order.name" id="client-name" type="text" placeholder="Имя">
               </div>
             </div>
             <div class="uk-margin">
               <label class="uk-form-label" for="client-phone">Номер телефона</label>
               <div class="uk-form-controls">
-                <input class="uk-input" v-model="order.phone" id="client-phone" type="text"
+                <input class="uk-input" required v-model="order.phone" id="client-phone" type="text"
                        placeholder="+7 (999) 999-99-99">
               </div>
             </div>
             <div class="uk-margin">
               <label class="uk-form-label" for="client-address">Адрес</label>
               <div class="uk-form-controls">
-                <input class="uk-input" v-model="order.address" id="client-address" type="text"
+                <input class="uk-input" required v-model="order.address" id="client-address" type="text"
                        placeholder="Темрюк, ул. Таманская 6">
               </div>
             </div>
@@ -78,7 +78,9 @@
             </div>
             <div class="uk-margin">
               <div class="uk-form-controls">
-                <button class="uk-button uk-button-primary uk-width-1-1" @click.prevent="sendOrder">ОФОРМИТЬ ЗАКАЗ
+                <button class="uk-button uk-button-primary uk-width-1-1"
+                        :disabled="cart.items.length ? false : true">
+                  ОФОРМИТЬ ЗАКАЗ
                 </button>
               </div>
             </div>
@@ -89,7 +91,9 @@
     <div class="uk-flex uk-flex-center uk-flex-wrap uk-grid-small" v-if="order.send">
       <div class="uk-text-center">
         <div class="uk-padding-large uk-margin-large">
+          <span uk-icon="icon: happy; ratio: 6" class="uk-margin" style="color: lawngreen"></span>
           <h1>ЗАКАЗ ОФОРМЛЕН</h1>
+          <p class="uk-text-lead">Наш менеджер свяжется с Вами для уточнения и подтверждения заказа в ближайшее время.</p>
           <a href="/">Вернуться на главную</a>
         </div>
       </div>
