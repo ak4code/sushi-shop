@@ -10,6 +10,13 @@ class Cart(models.Model):
         result = sum([item.get_amount() for item in self.items.all()])
         return result
 
+    def __str__(self):
+        return 'Корзина {0}'.format(self.pk)
+
+    class Meta:
+        verbose_name = 'Корзина'
+        verbose_name_plural = 'Корзины'
+
 
 class CartItem(models.Model):
     product = models.ForeignKey('catalog.Product', on_delete=models.CASCADE)
@@ -30,8 +37,8 @@ class Order(models.Model):
     phone = models.CharField(max_length=255, verbose_name='Телефон клиента')
     address = models.CharField(max_length=255, verbose_name='Адрес клиента')
     person = models.PositiveIntegerField(verbose_name='Количество персон')
-    cart = models.OneToOneField(Cart, on_delete=models.CASCADE)
-    send = models.BooleanField(default=False)
+    cart = models.OneToOneField(Cart, on_delete=models.CASCADE, verbose_name='Корзина')
+    send = models.BooleanField(default=False, verbose_name='Уведомление отправлено')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
 

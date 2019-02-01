@@ -21,8 +21,12 @@
                 </div>
                 <div>
                   <button class="uk-button-small uk-button uk-button-danger"
-                          @click="addItem(product.id)">В корзину
+                          @click="addItem(product.id)" v-if="!checkProductInCart(product.id)">
+                    В корзину
                   </button>
+                  <a href="/cart" class="uk-button-small uk-button uk-button-primary"
+                         v-else>Оформить
+                  </a>
                 </div>
               </div>
             </div>
@@ -45,7 +49,7 @@
 
 <script>
   import CategoryBar from '../components/CategoryBar'
-  import {mapActions} from 'vuex'
+  import {mapActions, mapGetters} from 'vuex'
   import UIkit from 'uikit'
 
   export default {
@@ -64,7 +68,11 @@
       this.getProducts(this.category)
       this.loading = false
     },
-    computed: {},
+    computed: {
+      ...mapGetters({
+        checkProductInCart: 'checkProductInCart'
+      })
+    },
     methods: {
       async getProducts (category) {
         await this.$axios.get(`/api/products?category=${category}`)

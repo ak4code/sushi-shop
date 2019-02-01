@@ -10,6 +10,9 @@ export default new Vuex.Store({
   getters: {
     cart: state => {
       return state.basket
+    },
+    checkProductInCart: (state) => (id) => {
+      return Boolean(state.basket.items.find(item => item.product === id))
     }
   },
   mutations: {
