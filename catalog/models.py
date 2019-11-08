@@ -11,6 +11,7 @@ class Category(models.Model):
     image = models.ImageField(upload_to='catalog/category', blank=True, null=True, verbose_name='Изображение')
     is_promo = models.BooleanField(default=False, verbose_name='Это акция?')
     is_home = models.BooleanField(default=False, verbose_name='Показывать на главной')
+    is_active = models.BooleanField(default=True, verbose_name='Активная')
     slug = models.SlugField(blank=True, null=True, unique=True, verbose_name='Ссылка')
     menu_items = GenericRelation(MenuItem)
 
