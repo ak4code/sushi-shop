@@ -13,5 +13,5 @@ def primary_menu():
 
 @register.inclusion_tag('administrator/catalog_menu.html')
 def catalog_menu():
-    categories = Category.objects.filter(is_home=True)
+    categories = Category.objects.filter(is_active=True).filter(is_home=True)
     return {'categories': categories}
