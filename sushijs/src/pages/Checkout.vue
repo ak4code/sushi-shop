@@ -140,8 +140,7 @@
         <div class="uk-padding-large uk-margin-large">
           <span uk-icon="icon: happy; ratio: 6" class="uk-margin" style="color: lawngreen"></span>
           <h1>ЗАКАЗ ОФОРМЛЕН</h1>
-          <p class="uk-text-lead">Наш менеджер свяжется с Вами для уточнения и подтверждения заказа в ближайшее
-            время.</p>
+          <p class="uk-text-lead">Ожидайте звонка оператора для потверждения заказа.</p>
           <a href="/">Вернуться на главную</a>
         </div>
       </div>
