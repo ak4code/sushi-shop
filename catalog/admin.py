@@ -15,8 +15,23 @@ class CategoryAdmin(admin.ModelAdmin):
     inlines = (MenuItemsInline,)
 
 
+def activate(modeladmin, request, queryset):
+    queryset.update(is_active=True)
+
+
+activate.short_description = "Сделать активными"
+
+
+def deactivate(modeladmin, request, queryset):
+    queryset.update(is_active=False)
+
+
+deactivate.short_description = "Сделать неактивными"
+
+
 @admin.register(Product)
 class ProductAdmin(ImportExportModelAdmin):
     resource_class = ProductResource
-    list_display = ('title', 'category', 'price')
-    list_filter = ('category',)
+    list_display = ('title', 'category', 'price', 'is_active')
+    list_filter = ('category', 'is_active')
+    actions = [activate, deactivate, ]

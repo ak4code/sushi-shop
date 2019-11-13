@@ -39,6 +39,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to=product_image_path, blank=True, null=True, verbose_name='Изображение')
     price = models.DecimalField(max_digits=15, decimal_places=2, default=0, verbose_name='Цена')
     label = models.CharField(max_length=255, blank=True, null=True, verbose_name='Ярлык товара')
+    is_active = models.BooleanField(default=True, verbose_name='Активный')
 
     def __str__(self):
         return self.title

@@ -10,7 +10,7 @@ class CategoryView(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(CategoryView, self).get_context_data(*args, **kwargs)
-        category = get_object_or_404(Category, slug=context['slug'])
+        category = get_object_or_404(Category, slug=context['slug'], is_active=True)
         context['category'] = category
         return context
 
@@ -20,7 +20,7 @@ class ProductView(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(ProductView, self).get_context_data(*args, **kwargs)
-        product = get_object_or_404(Product, id=context['product_id'])
+        product = get_object_or_404(Product, id=context['product_id'], is_active=True)
         context['product'] = product
         return context
 
@@ -31,6 +31,6 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
 
 class ProductViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.all()
+    queryset = Product.objects.filter(is_active=True)
     serializer_class = ProductSerializer
     filter_fields = ('category',)
