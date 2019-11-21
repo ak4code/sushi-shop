@@ -40,11 +40,12 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=15, decimal_places=2, default=0, verbose_name='Цена')
     label = models.CharField(max_length=255, blank=True, null=True, verbose_name='Ярлык товара')
     is_active = models.BooleanField(default=True, verbose_name='Активный')
+    position = models.PositiveIntegerField(default=0, blank=False, null=False, verbose_name='Порядок')
 
     def __str__(self):
         return self.title
 
     class Meta:
-        ordering = ['pk']
+        ordering = ['position']
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'

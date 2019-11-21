@@ -3,6 +3,7 @@ from .models import Category, Product
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 from administrator.admin import MenuItemsInline
+from adminsortable2.admin import SortableAdminMixin
 
 
 class ProductResource(resources.ModelResource):
@@ -30,8 +31,9 @@ deactivate.short_description = "Сделать неактивными"
 
 
 @admin.register(Product)
-class ProductAdmin(ImportExportModelAdmin):
+class ProductAdmin(SortableAdminMixin, ImportExportModelAdmin):
     resource_class = ProductResource
-    list_display = ('title', 'category', 'price', 'is_active')
+    list_display = ('position', 'title', 'category', 'price', 'is_active')
+    list_display_links = ('title',)
     list_filter = ('category', 'is_active')
     actions = [activate, deactivate, ]
