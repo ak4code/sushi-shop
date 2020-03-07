@@ -36,4 +36,5 @@ class ProductAdmin(SortableAdminMixin, ImportExportModelAdmin):
     list_display = ('position', 'title', 'category', 'price', 'is_active')
     list_display_links = ('title',)
     list_filter = ('category', 'is_active')
+    search_fields = ('title',)
     actions = [activate, deactivate, ]
