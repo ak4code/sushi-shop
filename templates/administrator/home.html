@@ -2,6 +2,18 @@
 {% load nav_menu %}
 {% block content %}
     {% catalog_menu %}
+    <script type="application/javascript">
+        function init () {
+            var vidDefer = document.getElementsByTagName('iframe');
+            for (var i = 0; i < vidDefer.length; i++) {
+                if (vidDefer[i].getAttribute('data-src')) {
+                    vidDefer[i].setAttribute('src', vidDefer[i].getAttribute('data-src'));
+                }
+            }
+        }
+
+        window.onload = init;
+    </script>
     <h1 class="uk-text-center text-kelly">{{ site.name }} - Роллы, суши, пицца, гамбургеры. Доставка</h1>
     <div>{{ site.shop.description|safe }}</div>
 {% endblock %}
