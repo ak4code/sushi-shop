@@ -134,7 +134,7 @@
                 delivery: true,
             },
             page: {
-                content: null
+                content: '<div>Загрузка...</div>'
             }
         }),
         mounted() {
@@ -149,7 +149,7 @@
             async getPage() {
                 await this.$axios.get(`/api/pages/dostavka/`)
                     .then(res => {
-                        this.page = res.data.results
+                        this.page = res.data
                     })
             },
             changeQuantity(item, $event) {
