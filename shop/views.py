@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from administrator.vkbot import send_order
 from .models import Cart, CartItem, Order
 from .serializers import CartSerializer, CartItemSerializer, OrderSerializer
+from sushishop.tgbot import tg_send_order
 
 
 class CartView(TemplateView):
@@ -57,4 +58,5 @@ class OrderViewSet(viewsets.ModelViewSet):
         ЗАКАЗ: \n {items!s} 
         '''.format(order=instance, total=instance.cart.get_total(), items=items)
         send_order(message)
+        tg_send_order(message)
         self.request.session.create()
