@@ -2,48 +2,42 @@
   <div id="checkout">
     <div class="uk-flex uk-flex-wrap uk-grid-small" v-if="!order.send">
       <div class="uk-width-3-4@m">
-        <div class="uk-overflow-auto">
-          <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
-            <thead>
-            <tr>
-              <th class="uk-table-shrink"></th>
-              <th class="uk-table-expand">Продукт</th>
-              <th class="uk-table-shrink uk-text-nowrap">Цена</th>
-              <th class="uk-width-small">Кол-во</th>
-              <th class="uk-table-shrink uk-text-nowrap">Сумма</th>
-              <th class="uk-table-shrink"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="item in cart.items" :key="item.id">
-              <td><img class="uk-preserve-width uk-border-rounded" :src="item.productInfo.image"
-                       width="40" alt=""></td>
-              <td>
-                {{item.productInfo.title}}
-              </td>
-              <td class="uk-text-nowrap">
-                {{item.productInfo.price}}
-              </td>
-              <td>
-                <input class="uk-input uk-form-small" type="number" min="1" :value="item.quantity"
-                       @change="changeQuantity(item, $event)">
-              </td>
-              <td class="uk-text-nowrap">
-                {{item.amount}} руб.
-              </td>
-              <td>
-                <a class="uk-preserve-width" uk-icon="icon: trash" @click="deleteItem(item)"></a>
-              </td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr>
-              <td colspan="6" class="uk-text-right">
-                <strong>Итого: {{cart.total}} руб.</strong>
-              </td>
-            </tr>
-            </tfoot>
-          </table>
+        <div class="cart-item-list">
+          <div class="cart-item uk-flex uk-flex-wrap uk-flex-middle uk-grid-small"
+               v-for="(item, index) in cart.items" :key="index">
+            <div class="item-image uk-width-auto">
+              <div class="uk-cover-container">
+                <canvas width="100" height="100"></canvas>
+                <img :src="item.productInfo.image" :alt="item.productInfo.title" width="100"
+                     height="100" uk-cover>
+              </div>
+
+            </div>
+            <div class="item-info uk-width-expand">
+              <div class="uk-flex uk-flex-wrap uk-flex-middle uk-grid-small">
+                <div class="uk-width-expand">
+                  <h5 class="uk-margin-small-bottom">{{item.productInfo.title}}</h5>
+                </div>
+                <div class="uk-width-1-5@m uk-text-center">
+                  <input class="uk-input" min="1" max="999" type="number" :value="item.quantity"
+                         @change="changeQuantity(item, $event)">
+                  <small>{{item.productInfo.price}} ₽ / шт.</small>
+                </div>
+                <div class="uk-width-1-5@m uk-flex-first uk-flex-last@m">
+                  <div class="uk-text-large uk-text-bold">
+                    {{item.amount}} ₽
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="uk-width-auto uk-padding-small">
+              <a @click="deleteItem(item)" uk-icon="trash"></a>
+            </div>
+          </div>
+        </div>
+        <div class="uk-padding uk-text-right">
+          <h4 class="uk-margin-remove uk-text-bold">Итого: {{cart.total}} ₽ *</h4>
+          <small class="uk-text-muted">* Без учета стоимости доставки</small>
         </div>
         <div class="uk-margin">
           <div class="uk-overflow-auto" v-html="page.content"></div>
@@ -120,10 +114,10 @@
 </template>
 
 <script>
-    import {mapGetters, mapActions} from 'vuex'
+    import { mapGetters, mapActions } from 'vuex'
 
     export default {
-        name: "checkout",
+        name: 'checkout',
         data: () => ({
             order: {
                 name: '',
@@ -137,7 +131,7 @@
                 content: '<div>Загрузка...</div>'
             }
         }),
-        mounted() {
+        mounted () {
             this.getPage()
         },
         computed: {
@@ -146,19 +140,19 @@
             })
         },
         methods: {
-            async getPage() {
+            async getPage () {
                 await this.$axios.get(`/api/pages/dostavka/`)
                     .then(res => {
                         this.page = res.data
                     })
             },
-            changeQuantity(item, $event) {
-                this.updateItemCart({id: item.id, quantity: $event.target.valueAsNumber})
+            changeQuantity (item, $event) {
+                this.updateItemCart({ id: item.id, quantity: $event.target.valueAsNumber })
             },
-            deleteItem(item) {
+            deleteItem (item) {
                 this.deleteItemCart(item)
             },
-            sendOrder() {
+            sendOrder () {
                 this.order.cart = this.cart.id
                 if (!this.order.delivery) {
                     this.order.address = 'САМОВЫВОЗ'
@@ -176,5 +170,15 @@
 </script>
 
 <style scoped>
+  .cart-item {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    width: 100%;
+    margin: 0;
+  }
 
+  .cart-item:first-child {
+    border-top: 1px solid #ddd;
+  }
 </style>

@@ -15,12 +15,10 @@
     {% for js_file in app_js_files %}
         <link href="{{ js_file.url }}" rel="preload" as="script">
     {% endfor %}
-    {% if not debug %}
-        {% get_files 'chunk-vendors' 'js' as chunk_js_files %}
-        {% for js_file in chunk_js_files %}
-            <link href="{{ js_file.url }}" rel="preload" as="script">
-        {% endfor %}
-    {% endif %}
+    {% get_files 'chunk-vendors' 'js' as chunk_js_files %}
+    {% for js_file in chunk_js_files %}
+        <link href="{{ js_file.url }}" rel="preload" as="script">
+    {% endfor %}
     {% for css_file in app_css_files %}
         <link href="{{ css_file.url }}" rel="preload" as="style">
     {% endfor %}
@@ -85,9 +83,7 @@
         </div>
     </div>
 </footer>
-{% if not debug %}
-    {% render_bundle 'chunk-vendors' 'js' %}
-{% endif %}
+{% render_bundle 'chunk-vendors' 'js' %}
 {% block extra_script %}{% endblock %}
 {% render_bundle 'index' 'js' %}
 <!-- Yandex.Metrika counter -->
@@ -97,8 +93,8 @@
     };
     m[i].l = 1 * new Date();
     k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
-})(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-ym(27502206, "init", {
+})(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
+ym(27502206, 'init', {
     id: 27502206,
     clickmap: true,
     trackLinks: true,
