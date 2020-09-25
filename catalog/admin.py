@@ -31,7 +31,7 @@ deactivate.short_description = "Сделать неактивными"
 
 
 @admin.register(Product)
-class ProductAdmin(SortableAdminMixin, ImportExportActionModelAdmin):
+class ProductAdmin(ImportExportActionModelAdmin):
     resource_class = ProductResource
     list_display = ('position', 'title', 'category', 'price', 'is_active')
     list_display_links = ('title',)
