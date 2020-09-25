@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Category, Product
 from import_export import resources
-from import_export.admin import ImportExportModelAdmin
+from import_export.admin import ImportExportActionModelAdmin
 from administrator.admin import MenuItemsInline
 from adminsortable2.admin import SortableAdminMixin
 
@@ -31,7 +31,7 @@ deactivate.short_description = "Сделать неактивными"
 
 
 @admin.register(Product)
-class ProductAdmin(SortableAdminMixin, ImportExportModelAdmin):
+class ProductAdmin(SortableAdminMixin, ImportExportActionModelAdmin):
     resource_class = ProductResource
     list_display = ('position', 'title', 'category', 'price', 'is_active')
     list_display_links = ('title',)
